@@ -4,7 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha ./tests"
+    "start:dev": "nodemon server.js babel-node",
+    "start": "node server.js",
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text babel-node ./node_modules/mocha/bin/_mocha ./tests",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [],
   "author": "Hope Ngerebara",
@@ -13,9 +16,11 @@
     "body-parser": "^1.18.3",
     "chai": "^4.1.2",
     "chai-http": "^4.2.0",
+    "coveralls": "^3.0.2",
     "express": "^4.16.3",
     "mocha": "^5.2.0",
     "mongoose": "^5.2.14",
+    "nyc": "^13.0.1",
     "should": "^13.2.3",
     "sinon": "^6.3.3",
     "winston": "^3.1.0"

@@ -15,6 +15,10 @@ describe('Locations', () => {
            done();           
         });        
     });
+
+    after(() => {
+        process.exit(0);
+    });
     
     /*
         * Test the /GET route
@@ -32,7 +36,6 @@ describe('Locations', () => {
         });
     })
     
-
     /*
         * Test the /POST route
     */
@@ -148,7 +151,6 @@ describe('Locations', () => {
             });
         });
     });
-
 
     describe('/DELETE/:locationId', () => {
         it('it should DELETE a location with a given id', (done) => {
