@@ -1,11 +1,9 @@
-const chai = require('chai');
-    sinon = require('sinon'),
+const chai = require('chai'),
     should = chai.should(),
-    chaiHttp = require('chai-http');
-    mongoose = require('mongoose'),
-    server = require('../server'),
-    Location = require('../server/models/locationModel');
+    chaiHttp = require('chai-http'),
+    server = require('../server');
 
+const Location = require('../server/models/locationModel');
 
 chai.use(chaiHttp);
 
