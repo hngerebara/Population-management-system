@@ -1,11 +1,9 @@
-const chai = require('chai');
-    sinon = require('sinon'),
+const chai = require('chai'),
     should = chai.should(),
-    chaiHttp = require('chai-http');
-    mongoose = require('mongoose'),
-    server = require('../server'),
-    Location = require('../server/models/locationModel');
+    chaiHttp = require('chai-http'),
+    server = require('../server');
 
+const Location = require('../server/models/locationModel');
 
 chai.use(chaiHttp);
 
@@ -14,6 +12,10 @@ describe('Locations', () => {
         Location.remove({}, (err) => { 
            done();           
         });        
+    });
+
+    after(() => {
+        process.exit(0);
     });
     
     /*
@@ -32,7 +34,6 @@ describe('Locations', () => {
         });
     })
     
-
     /*
         * Test the /POST route
     */
@@ -149,7 +150,6 @@ describe('Locations', () => {
         });
     });
 
-
     describe('/DELETE/:locationId', () => {
         it('it should DELETE a location with a given id', (done) => {
             let location = new Location({
@@ -169,56 +169,4 @@ describe('Locations', () => {
             });
         });
     })
-
 });
-
-
-
-
-// describe('Location Controller', () => {
-//     // it('should not allow an empty location name', () => {
-//     //     let Location = new locationController;
-//     //     const Location = function(location){
-//     //         this.save = function(){}
-//     //     }
-
-//     //     const req = {
-//     //         body: {
-//     //             name: ''
-//     //         }
-//     //     }
-
-//     //     const res = {
-//     //         status: sinon.spy(),
-//     //         json: sinon.spy()
-//     //     }
-
-//     //     Location.post(req, res);
-
-//     //     res.status.calledWith(400).should.equal(true, 'bad status')
-//     // })
-
-//     // const { createLocation } = require('../server/controllers/locationController');
-
-//     // describe("Get all Locations", function(){
-//     //     // Test will pass if we get all todos
-//     //     // it("should return all locations", (done) => {
-//     //     //     const mockLocation = sinon.mock(locationModel);
-//     //     //     const expectedResult = {status: true, locations: []};
-//     //     //     mockLocation.expects('find').yields(null, expectedResult);
-//     //     //     locationModel.find((err, result) => {
-//     //     //         locationModel.verify();
-//     //     //         locationModel.restore();
-//     //     //         expect(result.status).to.be.true;
-//     //     //         done();
-//     //     //     });
-//     //     // });
-        
-
-//     //     it('Should error out if no name provided ', function() {
-//     //         createLocation(req, res);
-//     //         console.log(res.sendCalledWith, "req=======")
-//     //         expect(res.sendCalledWith).to.contain('error');
-//     //     });
-//     // });
-// });

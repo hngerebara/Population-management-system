@@ -1,7 +1,7 @@
 const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
-    
-const LocationSchema =  new Schema({
+
+const subLocationSchema = new Schema({
     name: {
         type: String,
         required: [true, "Location name is required"],
@@ -23,9 +23,8 @@ const LocationSchema =  new Schema({
             message   : 'Female population must be an integer'
         }
     },
-    locations: [
-        { type: Schema.Types.ObjectId, ref: 'SubLocation' }
-    ],
+    totalPopulation: {type: Number},
+    parentLocation: { type: Schema.Types.ObjectId, ref: 'Location' },
     createdAt: { 
         type: Date,
         default: new Date()
@@ -36,4 +35,4 @@ const LocationSchema =  new Schema({
      },
 });
 
-module.exports = mongoose.model('Location', LocationSchema);
+module.exports = mongoose.model('subLocation', subLocationSchema);

@@ -1,4 +1,5 @@
-const location = require('../controllers/locationController');
+const location = require('../controllers/locationController'),
+    subLocation = require('../controllers/subLocationController');
 
 module.exports = (app) => {
 
@@ -12,5 +13,16 @@ module.exports = (app) => {
     .get(location.retrieveLocation)
     .put(location.updateLocation)
     .delete(location.deleteLocation);
+
+    app
+    .route('/locations/:locationId/sub')
+    .post(subLocation.createSubLocation)
+    .get(subLocation.allSubLocations);
+
+    app
+    .route('/locations/:locationId/sub/:subId')
+    .get(subLocation.retrieveSubLocation)
+    .put(subLocation.updateSubLocation)
+    .delete(subLocation.deleteSubLocation);
 
 }

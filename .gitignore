@@ -24,6 +24,9 @@ testem.log
 /package-lock.json
 .env
 
+.nyc_output
+reports
+
 # System Files
 .DS_Store
 Thumbs.db

@@ -2,7 +2,7 @@ const express = require('express'),
     mongoose = require('mongoose'),
     winston = require('winston'),
     bodyParser = require('body-parser'),
-    dbConfig = require('./config/database.config.js');
+    dbConfig = require('./config/database.config.js'),
     app = express();
 
 
@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 mongoose.Promise = global.Promise;
 
 winston.info('Connecting to the database...');
-
+let dbUrl;
 if(process.env.NODE_ENV === 'test'){
     dbUrl = dbConfig.test.url
 } else {
