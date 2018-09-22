@@ -15,7 +15,7 @@ This application was developed using the following:
 
 ### Tools and Modules Required
 The following are required to enable you run this locally
-* [NodeJs](https://nodejs.org/en) - 
+* [NodeJs](https://nodejs.org/en) - Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 *  Express - fast node.js network app framework
 * [Mongodb](https://docs.mongodb.com/)- The NoSQL database
 * [Postman](https://www.getpostman.com/) - To test APi's
