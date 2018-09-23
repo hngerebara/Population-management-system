@@ -51,7 +51,7 @@ TEST_DATABASE_URL = mongodb://localhost:27017/population_api_test
 
 * run `npm start`
 
-N/B: You can test out the endpoints using postman using the endpoints given below or test using the already documented api [here](Swagger)
+N/B: You can test out the endpoints using postman using the endpoints given below or test using the already documented api [here](https://web.postman.co/collections/4284912-fec38423-ac76-49a7-9dac-4343fc379f13?workspace=24d7221d-048c-4101-8a5d-414bd5b5b9d4#57260fb1-d5a4-4114-bd8a-ba2d04efb23b)
 
 * run `npm test` to see passing tests
 
