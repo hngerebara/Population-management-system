@@ -16,7 +16,7 @@ module.exports = {
             return res.status(400).json({message: 'Location name is too short'}); 
         }
         let isExist = await Location.find({name: req.body.name});
-        if(isExist){
+        if(isExist && isExist.length){
             return res.status(400).json({message: "Location name already exists"});
         }
 
@@ -96,10 +96,11 @@ module.exports = {
 
     async deleteLocation(req, res) {
         try{
-            let location =  await Location.findById(req.params.locationId)
+            let location =  await Location.findById(req.params.locationId);
             
             if (!location) return res.status(404).json({message: 'Location Not Found', });
-            await location.remove();            
+            await location.remove(); 
+
             return res.status(200).json({message: `Successfully deleted location with id ${req.params.locationId}`});
         
         }catch(ex){

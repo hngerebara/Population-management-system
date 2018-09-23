@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-    subLocationSchema = require('./subLocationModel').subLocationSchema;
+    subLocationSchema = require('./subLocationModel').subLocationSchema,
     Schema = mongoose.Schema;
     
 const LocationSchema =  new Schema({
@@ -34,18 +34,6 @@ const LocationSchema =  new Schema({
         type: Date,
         default: new Date()
      },
-});
-
-LocationSchema.pre('remove', (next) => {
-    if(this.locations && this.locations.length){
-        subLocationSchema.find({'parentLocation': this._id})
-            .then((subLocations) => {
-                Promise.all(subLocations.forEach((subLocation) => subLocation.remove()))
-                    .then(next());
-            });
-    } else {
-        next();
-    }
 });
 
 module.exports = mongoose.model('Location', LocationSchema);
