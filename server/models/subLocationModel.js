@@ -35,4 +35,7 @@ const subLocationSchema = new Schema({
      },
 });
 
-module.exports = mongoose.model('subLocation', subLocationSchema);
+module.exports = {
+    subLocation: mongoose.model('subLocation', subLocationSchema),
+    subLocationSchema: subLocationSchema
+}

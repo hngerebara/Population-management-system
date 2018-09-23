@@ -1,4 +1,5 @@
 const mongoose = require('mongoose'),
+    subLocationSchema = require('./subLocationModel').subLocationSchema;
     Schema = mongoose.Schema;
     
 const LocationSchema =  new Schema({
@@ -23,9 +24,8 @@ const LocationSchema =  new Schema({
             message   : 'Female population must be an integer'
         }
     },
-    locations: [
-        { type: Schema.Types.ObjectId, ref: 'SubLocation' }
-    ],
+    totalPopulation: {type: Number},
+    locations: [subLocationSchema],     
     createdAt: { 
         type: Date,
         default: new Date()
@@ -34,6 +34,18 @@ const LocationSchema =  new Schema({
         type: Date,
         default: new Date()
      },
+});
+
+LocationSchema.pre('remove', (next) => {
+    if(this.locations && this.locations.length){
+        subLocationSchema.find({'parentLocation': this._id})
+            .then((subLocations) => {
+                Promise.all(subLocations.forEach((subLocation) => subLocation.remove()))
+                    .then(next());
+            });
+    } else {
+        next();
+    }
 });
 
 module.exports = mongoose.model('Location', LocationSchema);

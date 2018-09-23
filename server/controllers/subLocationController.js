@@ -1,4 +1,4 @@
-const SubLocation = require('../models/subLocationModel'),
+const SubLocation = require('../models/subLocationModel').subLocation,
     Location = require('../models/locationModel');
 
 module.exports = {
@@ -6,6 +6,12 @@ module.exports = {
     async createSubLocation(req, res) {
         if(Object.keys(req.body).length === 0){
             return res.status(400).json({message: 'Body cannot be empty'});
+        }
+        if(req.body.malePopulation == undefined || req.body.femalePopulation == undefined){
+            return res.status(400).json({message: `${req.body.malePopulation? 'Male' : 'Female'} population is required`}); 
+        }
+        if(req.body.name.length < 3){
+            return res.status(400).json({message: 'Location name is too short'}); 
         }
 
         req.body.totalPopulation = req.body.femalePopulation + req.body.malePopulation;
@@ -19,12 +25,12 @@ module.exports = {
 
             location.locations.push(savedLocation);
             location.save();
-            return res.status(201).json(location);
+            return res.status(201).json(savedLocation);
 
         }catch(ex){
             switch(ex.code){
                 case 11000:
-                    return res.status(404).json({message: "Location name already exists"});
+                    return res.status(400).json({message: "Location name already exists"});
                 default:
                     return res.status(400).json(ex);
            }   
@@ -45,13 +51,11 @@ module.exports = {
     async retrieveSubLocation(req, res) {
         try{
             let subLocations = await SubLocation.findById(req.params.subId);
-
-            if (!subLocations) return res.status(404).json({message: 'Sub Location Not Found', });
             
             return res.status(200).json(subLocations);
 
         }catch(ex){
-            return res.status(400).json(ex);
+            return res.status(404).json({message: 'Sub Location Not Found'});
         }
     },
 
@@ -59,8 +63,6 @@ module.exports = {
 
         try {
             let subLocation =  await SubLocation.findById(req.params.subId);
-
-            if (!subLocation) return res.status(404).json({message: 'Location Not Found'});
 
             subLocation.name = req.body.name;
             subLocation.malePopulation = req.body.malePopulation;
@@ -73,9 +75,9 @@ module.exports = {
         }catch(ex) {
             switch(ex.code){
                 case 11000:
-                    return res.status(404).json({message: "Sub Location name already exists"});
+                    return res.status(405).json({message: "Sub Location name already exists"});
                 default:
-                    return res.status(400).json(ex);
+                    return res.status(404).json({message: 'Location Not Found'});
            }
         };
     },
@@ -84,7 +86,7 @@ module.exports = {
         try{
             let subLocation =  await SubLocation.findById(req.params.subId)
             
-            if (!subLocation) return res.status(404).json({message: 'Sub Location Not Found', });
+            if (!subLocation) return res.status(404).json({message: 'Sub Location Not Found'});
             await subLocation.remove();
             return res.status(200).json({message: `Successfully deleted location with id ${req.params.subId}`});
         

@@ -6,6 +6,20 @@ module.exports = {
         if(Object.keys(req.body).length === 0){
             return res.status(400).json({message: 'Body cannot be empty'});
         }
+        if(req.body.name == undefined){
+            return res.status(400).json({message: `Name is required`}); 
+        }
+        if(req.body.malePopulation == undefined || req.body.femalePopulation == undefined){
+            return res.status(400).json({message: `${req.body.malePopulation? 'Male ' : 'Female'} population is required`}); 
+        }
+        if(req.body.name.length < 3){
+            return res.status(400).json({message: 'Location name is too short'}); 
+        }
+        let isExist = await Location.find({name: req.body.name});
+        if(isExist){
+            return res.status(400).json({message: "Location name already exists"});
+        }
+
         try{
             
             req.body.totalPopulation = req.body.femalePopulation + req.body.malePopulation;   
@@ -16,18 +30,14 @@ module.exports = {
             return res.status(201).json(savedLocation);
 
         }catch(ex){
-            switch(ex.code){
-                case 11000:
-                    return res.status(404).json({message: "Location name already exists"});
-                default:
-                    return res.status(400).json(ex);
-           }   
+            return res.status(400).json(ex);
         } 
     },
 
     async allLocations(req, res) {
         try{
             let locations = await Location.find({});
+            // console.log(locations, "=============")
 
             //Sum all population
 
@@ -46,6 +56,13 @@ module.exports = {
 
             if (!location) return res.status(404).json({message: 'Location Not Found', });
             
+            if(location.locations && location.locations.length){
+                location.totalPopulation = location.locations.reduce((acc, subPopulation) => {
+                    return acc + subPopulation.totalPopulation;
+                  }, 0) + location.malePopulation + location.femalePopulation;
+            } else {
+                location.totalPopulation = location.malePopulation + location.femalePopulation;
+            } 
             return res.status(200).json(location);
 
         }catch(ex){
