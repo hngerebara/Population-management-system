@@ -1,6 +1,6 @@
 ## Population Management System
 
-[![Build Status](https://travis-ci.com/hngerebara/Population-management-system.svg?token=qbBk8baJpsNJr5Dz8G6p&branch=master)](https://travis-ci.com/hngerebara/Population-management-system) [![Coverage Status](https://coveralls.io/repos/github/hngerebara/Population-management-system/badge.svg?branch=master)](https://coveralls.io/github/hngerebara/Population-management-system?branch=master)
+[![Build Status](https://travis-ci.com/hngerebara/Population-management-system.svg?token=qbBk8baJpsNJr5Dz8G6p&branch=master)](https://travis-ci.com/hngerebara/Population-management-system) [![Coverage Status]
 
 Population management system is a system that contains a list of locations and the total number of residents in each location broken down by gender.
 
